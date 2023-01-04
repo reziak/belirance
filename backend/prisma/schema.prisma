@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id              String            @id @default(uuid())
+  email           String            @unique
+  password        String
+  tags            Tags[]
+  entries         Entries[]
+
+  @@map("users")
+}
+
+enum EntryType {
+  EXPENSE
+  INCOME
+  SAVINGS
+}
+
+model Tags {
+  id       String    @id @default(uuid())
+  name     String
+  icon     String
+  owner_id String
+  user     Users     @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  entries  Entries[]
+
+  @@map("tags")
+}
+
+model Entries {
+  id               String             @id @default(uuid())
+  description      String             @db.Text
+  type             EntryType
+  value            Int
+  start_date       DateTime
+  end_date         DateTime?
+  is_recurring     Boolean?           @default(false)
+  created_at       DateTime           @default(now())
+  tag_id           String
+  owner_id         String
+  parent_entry_id  String?
+  tag              Tags               @relation(fields: [tag_id], references: [id])
+  user             Users              @relation(fields: [owner_id], references: [id])
+  related_entry    Entries?           @relation("EntriesHistory", fields: [parent_entry_id], references: [id])
+  related_entries  Entries[]          @relation("EntriesHistory")
+  RecurringPattern RecurringPattern[]
+
+  @@map("entries")
+}
+
+enum RecurringType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+model RecurringPattern {
+  entry_id          String        @id
+  separation_count  Int
+  max_occurrences   Int
+  recurring_type    RecurringType
+  entry             Entries       @relation(fields: [entry_id], references: [id])
+
+  @@map("recurring_pattern")
+}
