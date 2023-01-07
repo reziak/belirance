@@ -1,5 +1,6 @@
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import { AppError } from "../../../app/lib/AppError";
 import { prisma } from "../../../app/lib/prismaClient";
 
 interface IAuthenticateUser {
@@ -15,11 +16,11 @@ export class AuthenticateUserUseCase {
       },
     });
 
-    if (!user) throw new Error("Invalid email or password");
+    if (!user) throw new AppError(400, "Invalid email or password");
 
     const matchingPassword = await compare(password, user.password);
 
-    if (!matchingPassword) throw new Error("Invalid email or password");
+    if (!matchingPassword) throw new AppError(400, "Invalid email or password");
 
     const token = sign({ email }, process.env.SECRET_KEY as string, {
       subject: user.id,
