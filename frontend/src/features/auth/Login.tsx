@@ -10,6 +10,7 @@ import {
   SignInForm,
 } from './styles'
 import { useAuth } from './hooks/useAuth'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const loginFormSchema = z.object({
   email: z.string(),
@@ -27,13 +28,20 @@ export const Login = () => {
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginFormSchema),
   })
-  const { signIn } = useAuth()
+  const { signIn, user } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const from = location.state?.from?.pathname || '/dashboard'
+
+  if (user) navigate(from)
 
   const handleLogin = async (data: LoginFormInputs) => {
     const response = await signIn(data)
 
     if (response) {
       reset()
+      navigate(from)
     }
   }
 

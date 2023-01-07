@@ -28,10 +28,14 @@ export const globalStyles = globalCss({
   'body, input, textarea, button': {
     fontFamily: 'Roboto',
     fontWeight: 400,
+    fontSize: '1rem',
   },
   button: {
     cursor: 'pointer',
     border: 0,
     borderRadius: 4,
+  },
+  input: {
+    outline: 0,
   },
 })

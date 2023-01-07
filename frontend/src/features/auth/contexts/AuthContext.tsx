@@ -1,10 +1,12 @@
-import { createContext, ReactNode, useCallback, useState } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 import { api } from '../../../app/lib/axios'
 import { LoginFormInputs } from '../Login'
 
 interface AuthContextType {
+  user: string | null
   loading: boolean
   signIn: (data: LoginFormInputs) => Promise<boolean>
+  signOut: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -14,9 +16,10 @@ interface AuthContextProviderProps {
 }
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [user, setUser] = useState<string | null>(null)
 
-  const signIn = useCallback(async (data: LoginFormInputs) => {
+  const signIn = async (data: LoginFormInputs) => {
     setLoading(true)
     try {
       const response = await api.post('/api/auth', { ...data })
@@ -26,6 +29,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         token: response.data,
       }
 
+      setUser(data.email)
       localStorage.setItem('belirance@user', JSON.stringify(userInfo))
       return true
     } catch (err) {
@@ -34,13 +38,25 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const signOut = () => {
+    setUser(null)
+    localStorage.removeItem('belirance@user')
+  }
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('belirance@user') || '{}')
+    setUser(user?.email || null)
   }, [])
 
   return (
     <AuthContext.Provider
       value={{
+        user,
         loading,
         signIn,
+        signOut,
       }}
     >
       {children}

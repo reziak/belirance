@@ -24,6 +24,8 @@ export const Card = styled('div', {
   borderRadius: 8,
   border: '1px solid $gray700',
   backgroundColor: '$gray800',
+  width: '100%',
+  maxWidth: 400,
 
   p: {
     maxWidth: 300,
@@ -42,11 +44,23 @@ export const SignInForm = styled('form', {
 })
 
 export const FormGroups = styled('div', {
+  padding: '0.5rem',
+
   label: {
     display: 'block',
+    fontFamily: 'Roboto Condensed',
+    fontSize: '0.75rem',
+    color: '$gray400',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
   },
   input: {
     width: '100%',
+    backgroundColor: 'transparent',
+    padding: '0.5rem',
+    color: '$white',
+    border: 0,
+    borderBottom: '1px solid $gray100',
   },
 })
 
@@ -57,11 +71,11 @@ export const SignInButton = styled('button', {
   textAlign: 'center',
   gap: '0.5rem',
   padding: '1rem 2rem',
-  border: '2px solid $gray700',
+  border: '2px solid $gray500',
   borderRadius: 8,
   transition: 'border-color 0.3s ease-in-out, color 0.2s ease-in-out',
 
   '&:hover': {
-    borderColor: '$gray100',
+    borderColor: '$gray200',
   },
 })
