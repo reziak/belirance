@@ -1,13 +1,10 @@
-import { useAuth } from '../auth/hooks/useAuth'
+import { Header } from './components/Header'
 
 export const Dashboard = () => {
-  const { signOut, user } = useAuth()
-
   return (
     <>
+      <Header />
       <h1>Dashboard</h1>
-      <p>Bem vindo, {user}</p>
-      <button onClick={signOut}>Logout</button>
     </>
   )
 }
