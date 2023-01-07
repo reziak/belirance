@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { api } from '../../../app/lib/axios'
 import { LoginFormInputs } from '../Login'
 
@@ -32,8 +33,9 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       setUser(data.email)
       localStorage.setItem('belirance@user', JSON.stringify(userInfo))
       return true
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      console.error(err.response)
+      toast.error(err.response.data.message)
       return false
     } finally {
       setLoading(false)
