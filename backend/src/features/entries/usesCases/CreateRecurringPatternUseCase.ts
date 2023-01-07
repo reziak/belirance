@@ -1,5 +1,5 @@
 import { RecurringType } from "../../../app/types";
-import { prisma } from "../../../lib/prismaClient";
+import { prisma } from "../../../app/lib/prismaClient";
 
 interface ICreateRecurringPattern {
   entry_id: string;

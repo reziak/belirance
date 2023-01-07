@@ -1,4 +1,4 @@
-import { prisma } from "../../../lib/prismaClient";
+import { prisma } from "../../../app/lib/prismaClient";
 
 interface ICreateTag {
   name: string;

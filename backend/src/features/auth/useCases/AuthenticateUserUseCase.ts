@@ -1,6 +1,6 @@
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
-import { prisma } from "../../../lib/prismaClient";
+import { prisma } from "../../../app/lib/prismaClient";
 
 interface IAuthenticateUser {
   email: string;

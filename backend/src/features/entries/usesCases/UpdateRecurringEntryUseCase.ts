@@ -1,4 +1,4 @@
-import { prisma } from "../../../lib/prismaClient";
+import { prisma } from "../../../app/lib/prismaClient";
 import { RecurringType } from '../../../app/types';
 
 interface IUpdateRecurringEntryUseCase {

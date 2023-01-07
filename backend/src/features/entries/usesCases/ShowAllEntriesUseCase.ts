@@ -1,5 +1,5 @@
-import { pageMeta } from "../../../lib/pageMeta";
-import { prisma } from "../../../lib/prismaClient";
+import { pageMeta } from "../../../app/lib/pageMeta";
+import { prisma } from "../../../app/lib/prismaClient";
 
 interface IShowAllEntries {
   owner_id: string;

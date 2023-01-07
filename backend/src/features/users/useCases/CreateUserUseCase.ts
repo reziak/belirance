@@ -1,5 +1,5 @@
 import { hash } from "bcrypt";
-import { prisma } from "../../../lib/prismaClient";
+import { prisma } from "../../../app/lib/prismaClient";
 
 interface ICreateUser {
   email: string;

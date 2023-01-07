@@ -1,5 +1,5 @@
 import { EntryType } from "../../../app/types";
-import { prisma } from "../../../lib/prismaClient";
+import { prisma } from "../../../app/lib/prismaClient";
 
 interface ICreateEntryUseCase {
   description: string;
